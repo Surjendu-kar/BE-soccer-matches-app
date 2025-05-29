@@ -1,6 +1,7 @@
 {
   "name": "soccer-matches-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "Backend API for Soccer Matches App",
   "main": "server.js",
   "scripts": {
@@ -15,12 +16,20 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.24",
     "nodemon": "^3.1.10"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "keywords": ["soccer", "api", "express", "vercel"],
+  "keywords": [
+    "soccer",
+    "api",
+    "express",
+    "vercel"
+  ],
   "author": "Surjendu kar",
   "license": "ISC"
 }
