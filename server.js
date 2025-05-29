@@ -20,7 +20,8 @@ const apiHeaders = {
 const corsOptions = {
   origin: [
     "http://localhost:3000",
-    "https://fe-soccer-matches-app.vercel.app", 
+    "https://fe-soccer-matches-app.vercel.app",
+    /\.vercel\.app$/,
   ],
   credentials: true,
   optionsSuccessStatus: 200,
@@ -41,7 +42,7 @@ app.get("/api/matches", async (req, res) => {
         dateFrom: new Date().toISOString().split("T")[0], // From today
         dateTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
           .toISOString()
-          .split("T")[0], // Next 7 days
+          .split("T")[0],
       },
     });
 
@@ -74,38 +75,6 @@ app.get("/api/matches", async (req, res) => {
   }
 });
 
-// Route to get available competitions
-app.get("/api/competitions", async (req, res) => {
-  try {
-    const response = await axios.get(`${FOOTBALL_API_BASE_URL}/competitions`, {
-      headers: apiHeaders,
-    });
-
-    const competitions = response.data.competitions.map((comp) => ({
-      id: comp.id,
-      name: comp.name,
-      code: comp.code,
-      area: comp.area.name,
-      plan: comp.plan,
-    }));
-
-    res.json({
-      success: true,
-      competitions: competitions,
-    });
-  } catch (error) {
-    console.error(
-      "Error fetching competitions:",
-      error.response?.data || error.message
-    );
-    res.status(500).json({
-      success: false,
-      error: "Failed to fetch competitions",
-      message: error.response?.data?.message || error.message,
-    });
-  }
-});
-
 // Health check route
 app.get("/api/health", (req, res) => {
   res.json({
@@ -121,7 +90,7 @@ app.get("/", (req, res) => {
   res.json({
     message: "Soccer Matches API",
     version: "1.0.0",
-    endpoints: ["/api/health", "/api/matches", "/api/competitions"],
+    endpoints: ["/api/health", "/api/matches"],
   });
 });
 
